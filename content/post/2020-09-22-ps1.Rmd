@@ -49,10 +49,14 @@ head(decon)
 Some initial explorations that would be used to guide this section.
 
 ```{r}
-deconON <- filter(decon, decon$province_territory == "Ontario")
+#Individual Territories
 deconNW <- filter(decon, decon$province_territory == "Northwest Territories")
 deconYU <- filter(decon, decon$province_territory == "Yukon")
 deconNU <- filter(decon, decon$province_territory == "Nunavut")
+#All Provincial Data
+`%!in%` = Negate(`%in%`)
+deconPRO <-filter(decon, decon$province_territory %!in% c("Northwest Territories",
+                                                          "Yukon", "Nunavut") )
 ```
 
 
