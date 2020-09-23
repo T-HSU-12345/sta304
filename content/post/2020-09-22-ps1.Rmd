@@ -1,20 +1,121 @@
 ---
 title: PS1
 author: Ting Hsu
-bibliography: bibliography.bib
 date: '2020-09-22'
-slug: ps1
 categories:
   - R
 tags:
-  - R Markdown
   - plot
+  - R Markdown
   - regression
+slug: ps1
 ---
 
-#Abstract
-This is a line that I added
+```{r setup, include=FALSE}
+library(devtools)
+library(dplyr)
+library(tidyverse)
+library(cesR)
+library(visdat)
+library(cesR)
+library(skimr)
+```
 
-#Introduction
+# Introduction
 
-#
+Three paragraph statement.
+
+First paragraph: General. Motivational. Majors specific finding. 
+
+Second paragraph: More about what you did and found.
+
+Third paragraph: Outline of the paper. Future work. Weaknesses.
+
+
+```{r download, warning=FALSE, message=FALSE, echo = FALSE, include = FALSE}
+# install.packages("devtools")
+# devtools::install_github("hodgettsp/cesR")
+
+cesR::get_decon()
+```
+
+# Data
+
+The CES dataset is....
+
+```{r}
+head(decon)
+```
+Some initial explorations that would be used to guide this section.
+
+```{r}
+deconON <- filter(decon, decon$province_territory == "Ontario")
+deconNW <- filter(decon, decon$province_territory == "Northwest Territories")
+deconYU <- filter(decon, decon$province_territory == "Yukon")
+deconNU <- filter(decon, decon$province_territory == "Nunavut")
+```
+
+
+The variables we focus on are....
+Education
+
+Summary statistics for these variables...
+
+You must include graphs.
+
+
+```{r}
+#Showing Education Levels between provinces
+# decon %>% 
+#   ggplot(aes(x = education, fill = education)) +
+#   geom_bar() + theme(legend.position = "top", axis.text.y=element_blank()) + guides(fill = "legend") + scale_fill_manual(values = c('#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8')) + facet_wrap(~ decon$province_territory) + coord_flip()
+decon %>% 
+  
+                                                                                                                          
+```
+
+
+```{r}
+decon %>% 
+  ggplot(aes(x = income)) +
+  geom_histogram()
+```
+
+
+In this graph we find that the distribution of income is heavily skewed....
+
+
+
+
+# Discussion
+
+My discussion... main findings of your graph.
+
+
+Features of your survey.... Non-response... etc. And how these could affect the results....
+
+
+
+
+## Weaknesses and next steps
+
+My weaknesses...
+
+
+
+
+
+
+# References
+
+- Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2020, '2019 Canadian Election Study - Online Survey', https://doi.org/10.7910/DVN/DUS88V, Harvard Dataverse, V1
+- Paul A. Hodgetts and Rohan Alexander (2020). cesR: Access the CES Datasets a Little Easier.. R package version 0.1.0.
+-  Hadley Wickham, Jim Hester and Winston Chang (2020). devtools: Tools to Make Developing R Packages Easier. https://devtools.r-lib.org/,https://github.com/r-lib/devtools.
+- R Core Team (2020). R: A language and environment for statistical computing. R, Foundation for Statistical Computing, Vienna, Austria. URL, https://www.R-project.org/.
+- JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2020). rmarkdown: Dynamic Documents for R. R package version 2.3. URL https://rmarkdown.rstudio.com.
+- Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2020, '2019 Canadian Election Study - Online Survey',
+           https://doi.org/10.7910/DVN/DUS88V, Harvard Dataverse, V1
+
+
+
+

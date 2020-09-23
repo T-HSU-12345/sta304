@@ -1,17 +1,407 @@
 ---
 title: PS1
 author: Ting Hsu
-
 date: '2020-09-22'
-slug: ps1
 categories:
   - R
 tags:
-  - R Markdown
   - plot
+  - R Markdown
   - regression
+slug: ps1
 ---
 
 
 
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Three paragraph statement.</p>
+<p>First paragraph: General. Motivational. Majors specific finding.</p>
+<p>Second paragraph: More about what you did and found.</p>
+<p>Third paragraph: Outline of the paper. Future work. Weaknesses.</p>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>The CES dataset is….</p>
+<pre class="r"><code>head(decon)</code></pre>
+<pre><code>## # A tibble: 6 x 22
+##   ces_code citizenship yob   gender province_territ… education lr    lr_bef
+##   &lt;chr&gt;    &lt;fct&gt;       &lt;fct&gt; &lt;fct&gt;  &lt;fct&gt;            &lt;fct&gt;     &lt;chr&gt; &lt;chr&gt; 
+## 1 ces2019… Canadian c… 1989  A wom… Quebec           Master&#39;s… 2     &lt;NA&gt;  
+## 2 ces2019… Canadian c… 1998  A wom… Quebec           Master&#39;s… 2     &lt;NA&gt;  
+## 3 ces2019… Canadian c… 2000  A wom… Ontario          Some uni… 4     4     
+## 4 ces2019… Canadian c… 1998  A man  Ontario          Some uni… 7     7     
+## 5 ces2019… Canadian c… 2000  A wom… Ontario          Complete… 4     4     
+## 6 ces2019… Canadian c… 1999  A wom… Ontario          Some uni… 4     4     
+## # … with 14 more variables: lr_aft &lt;chr&gt;, religion &lt;fct&gt;,
+## #   sexuality_selected &lt;fct&gt;, sexuality_text &lt;chr&gt;, language_eng &lt;fct&gt;,
+## #   language_fr &lt;fct&gt;, language_abgl &lt;fct&gt;, employment &lt;fct&gt;, income &lt;dbl&gt;,
+## #   income_cat &lt;fct&gt;, marital &lt;fct&gt;, econ_retro &lt;fct&gt;, econ_fed &lt;fct&gt;,
+## #   econ_self &lt;fct&gt;</code></pre>
+<p>Some initial explorations that would be used to guide this section.</p>
+<pre class="r"><code>visdat::vis_dat(decon)</code></pre>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>skimr::skim(decon)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">decon</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">37822</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">22</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">factor</td>
+<td align="left">16</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ces_code</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">lr</td>
+<td align="right">8486</td>
+<td align="right">0.78</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">lr_bef</td>
+<td align="right">23319</td>
+<td align="right">0.38</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">lr_aft</td>
+<td align="right">22989</td>
+<td align="right">0.39</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">sexuality_text</td>
+<td align="right">37822</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="9%" />
+<col width="13%" />
+<col width="7%" />
+<col width="8%" />
+<col width="42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">citizenship</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Can: 36480, Per: 1342, Oth: 0</td>
+</tr>
+<tr class="even">
+<td align="left">yob</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">82</td>
+<td align="left">198: 814, 199: 812, 195: 799, 195: 795</td>
+</tr>
+<tr class="odd">
+<td align="left">gender</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">A w: 21980, A m: 15551, Oth: 291</td>
+</tr>
+<tr class="even">
+<td align="left">province_territory</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">13</td>
+<td align="left">Ont: 14808, Que: 8399, Alb: 4481, Bri: 4354</td>
+</tr>
+<tr class="odd">
+<td align="left">education</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">12</td>
+<td align="left">Bac: 9192, Com: 7702, Com: 5865, Som: 4394</td>
+</tr>
+<tr class="even">
+<td align="left">religion</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">23</td>
+<td align="left">Cat: 10771, Non: 9834, Agn: 2326, Don: 2277</td>
+</tr>
+<tr class="odd">
+<td align="left">sexuality_selected</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">6</td>
+<td align="left">Het: 32632, Bis: 1635, Hom: 1566, Pre: 1276</td>
+</tr>
+<tr class="even">
+<td align="left">language_eng</td>
+<td align="right">8609</td>
+<td align="right">0.77</td>
+<td align="left">FALSE</td>
+<td align="right">1</td>
+<td align="left">Eng: 29213</td>
+</tr>
+<tr class="odd">
+<td align="left">language_fr</td>
+<td align="right">25815</td>
+<td align="right">0.32</td>
+<td align="left">FALSE</td>
+<td align="right">1</td>
+<td align="left">Fre: 12007</td>
+</tr>
+<tr class="even">
+<td align="left">language_abgl</td>
+<td align="right">37659</td>
+<td align="right">0.00</td>
+<td align="left">FALSE</td>
+<td align="right">1</td>
+<td align="left">Abo: 163</td>
+</tr>
+<tr class="odd">
+<td align="left">employment</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">13</td>
+<td align="left">Wor: 16124, Ret: 9008, Wor: 3415, Sel: 2517</td>
+</tr>
+<tr class="even">
+<td align="left">income_cat</td>
+<td align="right">25559</td>
+<td align="right">0.32</td>
+<td align="left">FALSE</td>
+<td align="right">9</td>
+<td align="left">Don: 2894, $30: 2559, $60: 1955, $1 : 1931</td>
+</tr>
+<tr class="odd">
+<td align="left">marital</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">7</td>
+<td align="left">Mar: 17230, Nev: 8458, Liv: 6070, Div: 2722</td>
+</tr>
+<tr class="even">
+<td align="left">econ_retro</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">Sta: 16774, Got: 14065, Got: 5024, Don: 1959</td>
+</tr>
+<tr class="odd">
+<td align="left">econ_fed</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">Not: 14330, Wor: 13906, Bet: 6441, Don: 3145</td>
+</tr>
+<tr class="even">
+<td align="left">econ_self</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">Not: 18926, Wor: 13669, Bet: 3815, Don: 1412</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="12%" />
+<col width="12%" />
+<col width="2%" />
+<col width="5%" />
+<col width="5%" />
+<col width="6%" />
+<col width="12%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">income</td>
+<td align="right">12266</td>
+<td align="right">0.68</td>
+<td align="right">2.640342e+56</td>
+<td align="right">4.220915e+58</td>
+<td align="right">0</td>
+<td align="right">43000</td>
+<td align="right">72000</td>
+<td align="right">110000</td>
+<td align="right">6.747658e+60</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>class(decon$ces_code)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>decon &lt;- 
+  decon %&gt;% 
+  filter(income &lt; 1000000)
 
+decon &lt;- 
+  decon %&gt;% 
+  select(religion, income)</code></pre>
+<p>The variables we focus on are….</p>
+<p>Summary statistics for these variables…</p>
+<p>You must include graphs.</p>
+<pre class="r"><code>decon %&gt;% 
+  ggplot(aes(x = religion)) +
+  geom_bar()</code></pre>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>decon %&gt;% 
+  ggplot(aes(x = income)) +
+  geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>decon %&gt;% 
+  ggplot(aes(x = income)) +
+  geom_histogram() +
+  labs(x = &quot;Income&quot;,
+       y = &quot;Number&quot;,
+       title = &quot;Distribution of income in 2019 CES&quot;,
+       caption = &quot;Source: Stephenson, Harell, Rubenson, Loewen, 2020.&quot;) +
+  theme_bw()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>In this graph we find that the distribution of income is heavily skewed….</p>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>My discussion… main findings of your graph.</p>
+<p>Features of your survey…. Non-response… etc. And how these could affect the results….</p>
+<div id="weaknesses-and-next-steps" class="section level2">
+<h2>Weaknesses and next steps</h2>
+<p>My weaknesses…</p>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<ul>
+<li>Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2020, ‘2019 Canadian Election Study - Online Survey’, <a href="https://doi.org/10.7910/DVN/DUS88V" class="uri">https://doi.org/10.7910/DVN/DUS88V</a>, Harvard Dataverse, V1</li>
+<li>Paul A. Hodgetts and Rohan Alexander (2020). cesR: Access the CES Datasets a Little Easier.. R package version 0.1.0.</li>
+<li>Hadley Wickham, Jim Hester and Winston Chang (2020). devtools: Tools to Make Developing R Packages Easier. <a href="https://devtools.r-lib.org/,https://github.com/r-lib/devtools" class="uri">https://devtools.r-lib.org/,https://github.com/r-lib/devtools</a>.</li>
+<li>R Core Team (2020). R: A language and environment for statistical computing. R, Foundation for Statistical Computing, Vienna, Austria. URL, <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</li>
+<li>JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2020). rmarkdown: Dynamic Documents for R. R package version 2.3. URL <a href="https://rmarkdown.rstudio.com" class="uri">https://rmarkdown.rstudio.com</a>.</li>
+<li>Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2020, ‘2019 Canadian Election Study - Online Survey’,
+<a href="https://doi.org/10.7910/DVN/DUS88V" class="uri">https://doi.org/10.7910/DVN/DUS88V</a>, Harvard Dataverse, V1</li>
+</ul>
+</div>
