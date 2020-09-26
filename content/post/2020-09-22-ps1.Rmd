@@ -1,5 +1,5 @@
 ---
-title: PS1
+title: "CES: Comparing Opinions of the Economy between the Differently Employed"
 author: Ting Hsu
 date: '2020-09-22'
 categories:
@@ -18,7 +18,14 @@ library(tidyverse)
 library(cesR)
 #install.packages("gridExtra")
 library(gridExtra)
+library(visdat)
 ```
+
+# Abstract
+
+Using data from the 2019 Canadian Elections Study, three different questions about the economy and given to people of different employment statuses (Students, Retired, Part Time, Full Time, Unemployed, and Disabled), and their opinions are compared. The data is then organized with the goal to see if there will be major differences in opinion between people of different employment status. It seems that people tend to not think the economy is better, and think it is mostly worse off.
+
+***
 
 # Introduction
 
@@ -30,52 +37,55 @@ There are three sections of the survey that will be compared, and they are:
 * econ_fed: If people think that the government have made an impact on the economy - whether it is positive or negative.
 * econ_self: How did people feel the effects of the government policies economically.  
 
-Through the explorations of data, it is found that unemployed and disabled people are more likely, according to this study, to view the economy to be worse. Though a significant portion of them still think that there are no significant differences. Most importantly, only a minority in any group think that the economy is getting better.
+Through the exploration of data, I found that unemployed and disabled people are more likely, according to this survey, to view the economy to be worse. Though a significant portion of them still think that there are no significant differences. Most importantly, at any given time only a minority in any group think that the economy is getting better.
 
-This is only a preliminary analysis of the data, and no statistical model have been fitted to match the data. Mainly because the study is done on categorical data with only four different choices. 
+This is only a preliminary analysis of the data, and no statistical model have been fitted to match the data. Mainly because the study is done on categorical data with only four different choices. Which means that fitting a statistical model is an improvement that can be made, and of course, a weakness in itself also. Regardless, another possible area that can be explored is other factors that may affect people's opinion on the economy.
 
 ```{r download, warning=FALSE, message=FALSE, echo = FALSE, include = FALSE}
 # install.packages("devtools")
 # devtools::install_github("hodgettsp/cesR")
-
+# Get the CES data
 cesR::get_decon()
 ```
 
 # Data
 
-The CES dataset is....
+```{r functions, echo = FALSE}
 
-Some initial explorations that would be used to guide this section.
+#This is a totaling function, cat is the column in decon, target is the string to sort the input wanted from cat, and type is the sub group in the cat. Returns the total rows of target population is type is NULL. Otherwise, returns the amount of people that did not give no opinion.
+#e.g: If you want to find the amount of Students that do not have an opinion on econ_retro: total(decon$employment, c("Student", "Student and working for Pay"), decon$econ_retro)
 
-```{r, echo = FALSE}
-#Data Exploration Code
-
-#Individual Territories
-# deconNW <- filter(decon, decon$province_territory == "Northwest Territories")
-# deconYU <- filter(decon, decon$province_territory == "Yukon")
-# deconNU <- filter(decon, decon$province_territory == "Nunavut")
-#All Provincial Data
-# `%!in%` = Negate(`%in%`)
-# deconPRO <-filter(decon, decon$province_territory %!in% c("Northwest Territories",
-#                                                          "Yukon", "Nunavut") )
-#Employment Status
-# students <- filter(decon$employment %in% c("Student", "Student and working for Pay"))
-# partTime <- filter(decon$employment %in% c("Working for pay part-time", "Self employed (with or without employees)"))
-# fullTime <- filter(decon$employment %in% c("Working for pay full-time"))
-# retired <- filter(decon$employment %in% c("Retired"))
-# unemployed <- filter(decon$employment %in% c("Unemployed/ looking for work"))
-# disabled <- filter(decon$employment %in% c("Disabled"))
+total <- function(cat, target, type){
+  if (is.null(type)){
+    return(nrow(filter(decon, cat %in% target)))
+  } else {
+    return(nrow(filter(decon, cat %in% target)) - nrow(filter(decon, cat %in% target & type %in% c("Don't know/ Prefer not to answer"))))
+  }
+}
 ```
+Of `r nrow(decon)` people, 2456 of them did not fill in the data and therefore are not considered as part of the following graphs. In the survey, the students are split into Students and Students with Pay, but they are combined in this report as simply "Student".
 
+Here are the general numbers:
 
-The variables we focus on are....
-Differently employed people and their opinions on the economy. Also their opinion on the government's policies on economy
+- Total amount of Students: `r total(decon$employment, c("Student", "Student and working for Pay"), NULL)`
+- Total amount of Part Timers: `r total(decon$employment, c("Working for pay part-time"), NULL)`
+- Total amount of Full Timers: : `r total(decon$employment, c("Working for pay full-time"), NULL)`
+- Total amount of Retired: `r total(decon$employment, c("Retired"), NULL)`
+- Total amount of Unemployed: `r total(decon$employment, c("Unemployed/ looking for work"), NULL)`
+- Total amount of Disabled: `r total(decon$employment, c("Disabled"), NULL)`
+- Total amount of Self Employed: `r total(decon$employment, c("Self employed (with or without employees)"), NULL)`
 
+### People's View of the Economy over the Past Year
+_Figures are numbered from top to bottom, and left to right. As in, Student's Opinion -> Part Time -> Full Time -> Retired -> Unemployed -> Disabled -> Self Employed_  
 
-```{r, echo = FALSE}
+_Fig. 1 ~ 7_
+
+```{r graph-econ_ER, echo = FALSE}
 #Displaying Bar Graph of various employment groups of their opinions on Canada's economy within the past year
 
-#Takes optF as the vector that act as the filter input, topic is the title
+#Takes optF as the vector that act as the filter input, topic is the title,
+#graphs the percentage graph of econ_retro
+
 graphER<- function( optF, topic){
   decon %>%
   filter(decon$employment %in% optF) %>% 
@@ -102,8 +112,7 @@ decon %>%
   axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
   labs(title = "Student's Opionion")
 
-graphER( c("Working for pay part-time",
-                              "Self employed (with or without employees)"), 
+graphER( c("Working for pay part-time"), 
          "Part Time") -> pt
 
 graphER(c("Working for pay full-time"), "Full Time") -> ft
@@ -114,16 +123,23 @@ graphER(c("Unemployed/ looking for work"), "Unemployed") -> um
 
 graphER(c("Disabled"), "Disabled")-> ds
 
-grid.arrange(pt, ft, re, um, ds, ncol=3, nrow =3)
+graphER(c("Self employed (with or without employees)"), "Self Employed") -> se
+
+grid.arrange(pt, ft, re, um, ds, se, ncol=2, nrow =3)
 ```
 
-In this graph we find that the opinion of most people swings between the economy staying the same or the economy is getting wose. With only disabled and unemployed people having more people that think the economy got worse, while still have a big proportion of people that still think the economy that is staying the same.
+- The average difference between "Got Worse" and "Got Better": `r ((32.4 - 11.6) + (37.1 - 12) + (37 - 13.2) + (34 - 17) + (46.5 - 9.2) + (46.0 - 9.4) + (38.9 - 12.3)) / 7`%
+ 
 
-Econ_Fed
-```{r, echo = FALSE}
+### People's View of the Government's Work on the Economy
+_Fig. 8 ~ 13_
+
+```{r graph-econ_EF, echo = FALSE}
 #Displaying graph of how the various employment groups view the government
 
-#Takes optF as the vector that act as the filter input, topic is the title
+#Takes optF as the vector that act as the filter input, topic is the title,
+#graphs the percentage graph of econ_fed
+
 graphEF<- function( optF, topic){
   decon %>%
   filter(decon$employment %in% optF) %>% 
@@ -151,9 +167,7 @@ decon %>%
   labs(title = "Student's Opionion")
 
 #Print the rest of the graphs
-graphEF( c("Working for pay part-time",
-                              "Self employed (with or without employees)"), 
-         "Part Time") -> ptf
+graphEF( c("Working for pay part-time"), "Part Time") -> ptf
 
 graphEF(c("Working for pay full-time"), "Full Time") -> ftf
 
@@ -163,16 +177,24 @@ graphEF(c("Unemployed/ looking for work"), "Unemployed") -> umf
 
 graphEF(c("Disabled"), "Disabled")-> dsf
 
+graphEF(c("Self employed (with or without employees)"), "Self Employed") -> sef
+
 #Arrange the rest of the graphs
-grid.arrange(ptf, ftf, rtf, umf, dsf, ncol=3, nrow =3)
+grid.arrange(ptf, ftf, rtf, umf, dsf, sef, ncol=2, nrow =3)
 ```
 
-Econ_self
-```{r, echo = FALSE}
+- The average difference between Worse and Better: `r ((28.6 - 16.5) + (36 - 15.1) + (37.7- 17.61) + (33.9 - 19.7) + (40.2 - 13.7) + (41.8 - 13.6) + (39.49 - 14.02)) / 7`%
+
+### Government's Policies' Effect on People
+_Fig. 14 ~ 19_
+
+```{r graph-econ_ES, echo = FALSE}
 #Displaying graph of how the various employment groups view their situation as compared to before
 
-#Takes optF as the vector that act as the filter input, topic is the title
-graphIT<- function( optF, topic){
+#Takes optF as the vector that act as the filter input, topic is the title,
+#graphs the percentage graph of econ_self
+
+graphES<- function( optF, topic){
   decon %>%
   filter(decon$employment %in% optF) %>% 
   count(econ_self) %>% 
@@ -198,40 +220,49 @@ decon %>%
   axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
   labs(title = "Student's Opionion")
 
-graphIT( c("Working for pay part-time",
-                              "Self employed (with or without employees)"), 
-         "Part Time") -> pts
+graphES( c("Working for pay part-time"), "Part Time") -> pts
 
-graphIT(c("Working for pay full-time"), "Full Time") -> fts
+graphES(c("Working for pay full-time"), "Full Time") -> fts
 
-graphIT(c("Retired"), "Retired") -> rts
+graphES(c("Retired"), "Retired") -> rts
 
-graphIT(c("Unemployed/ looking for work"), "Unemployed") -> ums
+graphES(c("Unemployed/ looking for work"), "Unemployed") -> ums
 
-graphIT(c("Disabled"), "Disabled")-> dss
+graphES(c("Disabled"), "Disabled")-> dss
 
-grid.arrange(pts, fts, rts, ums, dss, ncol=3, nrow =3)
+graphES(c("Self employed (with or without employees)"), "Self Employed") -> ses
+
+grid.arrange(pts, fts, rts, ums, dss, ses, ncol=2, nrow =3)
 ```
 
-
-
+- The average difference between "Better" and "Worse": `r ((31.5 - 12.6 ) + (35.9 - 10.5) + (37.3 - 11.9) + (30.7 - 7.2)  + (46.8 - 7.9) + (44.6 - 7.9) + (37.8 - 9.3)) / 7`%
 
 # Discussion
+The main theme across Fig. 1-7 are that everyone except for the unemployed and the disabled people share similar opinions of economy, with roughly 10% of Disabled and Unemployed people are shifted towards "Got Worse" as compared to "Stayed about the same.  
 
-My discussion... main findings of your graph.
+Across Fig. 8-13 the average difference between "Stayed about the same" and "Worse" is about the same, but still there are much more people with a negative outlook on the economical policies than positive outlook. 
 
+Across Fig. 14 ~ 19, it has the biggest average difference between Worse and Better, and it has approximately the same results as Fig. 1 ~ 7, as government's policy and economy seem to go hand in hand.
 
-Features of your survey.... Non-response... etc. And how these could affect the results....
+The surprising thing is that across all three economical opinions, there is always more than a third of any group that think the economy has not shifted at all, and it is almost unanimous in the fact that a big proportion of the economy is getting worse. Though the students have the most variability in terms of % of people thinking that the economy is better.
 
+This survey is conducted online, and it has many columns containing non-responses. None responses are shown as a gray column in the figure below. However, the columns used are the ones that are mostly in green, meaning that there's a response.
+
+```{r see_none_response, echo = FALSE}
+visdat::vis_dat(decon)
+```
 
 
 
 ## Weaknesses and next steps
 
-My weaknesses...
+The statistical means calculated in the data sections are not weighted, which meant that the smaller populations like unemployed have the same weight in calculating the average as the full time workers, which make up almost half of all the data point. Also, as mentioned before there are no statistical models fitted to this report, and the analysis done is mostly rudimentary.
 
+Possible next steps can be to dig further into the data and:
 
-
+- Put a weight on each employment area based on amount of people
+- Find another variable that may tie employment type to their opinion
+- Fit a model where possible
 
 
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A Hugo website</title>
+    <title>Ting&#39;s Website</title>
     <link>/</link>
-    <description>Recent content on A Hugo website</description>
+    <description>Recent content on Ting&#39;s Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>PS1</title>
+      <title>CES: Comparing Opinions of the Economy between the Differently Employed</title>
       <link>/2020/09/22/ps1/</link>
       <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/2020/09/22/ps1/</guid>
-      <description></description>
+      <description>Abstract Using data from the 2019 Canadian Elections Study, three different questions about the economy asd given to people of different employment statuses (Students, Retired, Part Time, Full Time, Unemployed, and Disabled), and their opinions are compared. The data is then organized with the goal to see if there will be major differences in opinion between people of different employment status. It seems that people tend to not think the economy is better, and that unemployed/disabled people tend to think that the economy is worse off in general.</description>
     </item>
     
     <item>

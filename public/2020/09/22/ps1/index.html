@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.75.1" />
 
 
-<title>PS1 - A Hugo website</title>
-<meta property="og:title" content="PS1 - A Hugo website">
+<title>CES: Comparing Opinions of the Economy between the Differently Employed - Ting&#39;s Website</title>
+<meta property="og:title" content="CES: Comparing Opinions of the Economy between the Differently Employed - Ting&#39;s Website">
 
 
   <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
@@ -57,10 +57,10 @@
 
   <article class="article">
     
-    <span class="article-duration">0 min read</span>
+    <span class="article-duration">4 min read</span>
     
 
-    <h1 class="article-title">PS1</h1>
+    <h1 class="article-title">CES: Comparing Opinions of the Economy between the Differently Employed</h1>
 
     
     <span class="article-date">2020-09-22</span>
@@ -70,7 +70,66 @@
       
 
 
-
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
+<p>Using data from the 2019 Canadian Elections Study, three different questions about the economy asd given to people of different employment statuses (Students, Retired, Part Time, Full Time, Unemployed, and Disabled), and their opinions are compared. The data is then organized with the goal to see if there will be major differences in opinion between people of different employment status. It seems that people tend to not think the economy is better, and that unemployed/disabled people tend to think that the economy is worse off in general.</p>
+<hr />
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Is the Canadian economy in recession? I am not the expert on this subject. However, the Canadian Election Survey have collected information from 37822 people about their opinion, and I can organize their opinions to get a general idea as to what people THINK about the economy. The survey contains a myriad of questions such as employment status, religion, and income. This report looks at how might employment status affect the people’s opinion on how well the economy is doing.</p>
+<p>There are three sections of the survey that will be compared, and they are:</p>
+<ul>
+<li>econ_retro: How people felt the economy have been in the past year.</li>
+<li>econ_fed: If people think that the government have made an impact on the economy - whether it is positive or negative.</li>
+<li>econ_self: How did people feel the effects of the government policies economically.</li>
+</ul>
+<p>Through the exploration of data, I found that unemployed and disabled people are more likely, according to this survey, to view the economy to be worse. Though a significant portion of them still think that there are no significant differences. Most importantly, only a minority in any group think that the economy is getting better.</p>
+<p>This is only a preliminary analysis of the data, and no statistical model have been fitted to match the data. Mainly because the study is done on categorical data with only four different choices. Which means that fitting a statistical model is an improvement that can be made, and of course, a weakness in itself also. Regardless, another possible area that can be explored is other factors that may affect people’s opinion on the economy.</p>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>Of 37822 people, 2456 of them did not fill in the data and therefore are not considered as part of the following graphs. In the survey, the students are split into Students and Students with Pay, but they are combined in this report as simply “Student”.</p>
+<div id="peoples-view-of-the-economy-over-the-past-year" class="section level3">
+<h3>People’s View of the Economy over the Past Year</h3>
+<p><em>Figures are numbered from top to bottom, and left to right. As in, Student’s Opinion -&gt; Part Time -&gt; Full Time -&gt; Retired -&gt; Unemployed -&gt; Disabled -&gt; Self Employed</em></p>
+<p><em>Fig. 1 ~ 7</em>
+<img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+</div>
+<div id="peoples-view-of-the-governments-work-on-the-economy" class="section level3">
+<h3>People’s View of the Government’s Work on the Economy</h3>
+<p><em>Fig. 8 ~ 13</em>
+<img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-3-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+</div>
+<div id="governments-policies-effect-on-people" class="section level3">
+<h3>Government’s Policies’ Effect on People</h3>
+<p><em>Fig. 14 ~ 19</em>
+<img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+</div>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>The main theme across Fig. 1-6 are that Retirees, Students,</p>
+<p>Features of your survey…. Non-response… etc. And how these could affect the results….</p>
+<div id="weaknesses-and-next-steps" class="section level2">
+<h2>Weaknesses and next steps</h2>
+<p>My weaknesses…</p>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<ul>
+<li>Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2020, ‘2019 Canadian Election Study - Online Survey’, <a href="https://doi.org/10.7910/DVN/DUS88V" class="uri">https://doi.org/10.7910/DVN/DUS88V</a>, Harvard Dataverse, V1</li>
+<li>Paul A. Hodgetts and Rohan Alexander (2020). cesR: Access the CES Datasets a Little Easier.. R package version 0.1.0.</li>
+<li>Hadley Wickham, Jim Hester and Winston Chang (2020). devtools: Tools to Make Developing R Packages Easier. <a href="https://devtools.r-lib.org/,https://github.com/r-lib/devtools" class="uri">https://devtools.r-lib.org/,https://github.com/r-lib/devtools</a>.</li>
+<li>R Core Team (2020). R: A language and environment for statistical computing. R, Foundation for Statistical Computing, Vienna, Austria. URL, <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</li>
+<li>JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2020). rmarkdown: Dynamic Documents for R. R package version 2.3. URL <a href="https://rmarkdown.rstudio.com" class="uri">https://rmarkdown.rstudio.com</a>.</li>
+<li>Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2020, ‘2019 Canadian Election Study - Online Survey’,
+<a href="https://doi.org/10.7910/DVN/DUS88V" class="uri">https://doi.org/10.7910/DVN/DUS88V</a>, Harvard Dataverse, V1</li>
+<li>Baptiste Auguie (2017). gridExtra: Miscellaneous Functions for “Grid” Graphics. R package version 2.3.
+<a href="https://CRAN.R-project.org/package=gridExtra" class="uri">https://CRAN.R-project.org/package=gridExtra</a></li>
+</ul>
+</div>
 
     </div>
   </article>
