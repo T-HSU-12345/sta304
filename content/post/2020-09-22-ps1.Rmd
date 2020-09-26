@@ -16,21 +16,23 @@ library(devtools)
 library(dplyr)
 library(tidyverse)
 library(cesR)
-library(visdat)
-library(cesR)
-library(skimr)
+#install.packages("gridExtra")
+library(gridExtra)
 ```
 
 # Introduction
 
-Three paragraph statement.
+Is the Canadian economy in recession? I am not the expert on this subject. However, the Canadian Election Survey have collected information from 37822 people about their opinion, and I can organize their opinions to get a general idea as to what people THINK about the economy. The survey contains a myriad of questions such as employment status, religion, and income. This report looks at how might employment status affect the people's opinion on how well the economy is doing.
 
-First paragraph: General. Motivational. Majors specific finding. 
+There are three sections of the survey that will be compared, and they are: 
 
-Second paragraph: More about what you did and found.
+* econ_retro: How people felt the economy have been in the past year.
+* econ_fed: If people think that the government have made an impact on the economy - whether it is positive or negative.
+* econ_self: How did people feel the effects of the government policies economically.  
 
-Third paragraph: Outline of the paper. Future work. Weaknesses.
+Through the explorations of data, it is found that unemployed and disabled people are more likely, according to this study, to view the economy to be worse. Though a significant portion of them still think that there are no significant differences. Most importantly, only a minority in any group think that the economy is getting better.
 
+This is only a preliminary analysis of the data, and no statistical model have been fitted to match the data. Mainly because the study is done on categorical data with only four different choices. 
 
 ```{r download, warning=FALSE, message=FALSE, echo = FALSE, include = FALSE}
 # install.packages("devtools")
@@ -43,50 +45,173 @@ cesR::get_decon()
 
 The CES dataset is....
 
-```{r}
-head(decon)
-```
 Some initial explorations that would be used to guide this section.
 
-```{r}
+```{r, echo = FALSE}
+#Data Exploration Code
+
 #Individual Territories
-deconNW <- filter(decon, decon$province_territory == "Northwest Territories")
-deconYU <- filter(decon, decon$province_territory == "Yukon")
-deconNU <- filter(decon, decon$province_territory == "Nunavut")
+# deconNW <- filter(decon, decon$province_territory == "Northwest Territories")
+# deconYU <- filter(decon, decon$province_territory == "Yukon")
+# deconNU <- filter(decon, decon$province_territory == "Nunavut")
 #All Provincial Data
-`%!in%` = Negate(`%in%`)
-deconPRO <-filter(decon, decon$province_territory %!in% c("Northwest Territories",
-                                                          "Yukon", "Nunavut") )
+# `%!in%` = Negate(`%in%`)
+# deconPRO <-filter(decon, decon$province_territory %!in% c("Northwest Territories",
+#                                                          "Yukon", "Nunavut") )
+#Employment Status
+# students <- filter(decon$employment %in% c("Student", "Student and working for Pay"))
+# partTime <- filter(decon$employment %in% c("Working for pay part-time", "Self employed (with or without employees)"))
+# fullTime <- filter(decon$employment %in% c("Working for pay full-time"))
+# retired <- filter(decon$employment %in% c("Retired"))
+# unemployed <- filter(decon$employment %in% c("Unemployed/ looking for work"))
+# disabled <- filter(decon$employment %in% c("Disabled"))
 ```
 
 
 The variables we focus on are....
-Education
-
-Summary statistics for these variables...
-
-You must include graphs.
+Differently employed people and their opinions on the economy. Also their opinion on the government's policies on economy
 
 
-```{r}
-#Showing Education Levels between provinces
-# decon %>% 
-#   ggplot(aes(x = education, fill = education)) +
-#   geom_bar() + theme(legend.position = "top", axis.text.y=element_blank()) + guides(fill = "legend") + scale_fill_manual(values = c('#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8')) + facet_wrap(~ decon$province_territory) + coord_flip()
-decon %>% 
-  
-                                                                                                                          
+```{r, echo = FALSE}
+#Displaying Bar Graph of various employment groups of their opinions on Canada's economy within the past year
+
+#Takes optF as the vector that act as the filter input, topic is the title
+graphER<- function( optF, topic){
+  decon %>%
+  filter(decon$employment %in% optF) %>% 
+  count(econ_retro) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ggplot(aes(x = econ_retro, y = prop, group = econ_retro)) +
+  geom_col(aes(fill = econ_retro), position = "dodge") +
+  geom_text(aes(label = scales::percent(prop), y = prop, group = econ_retro)) +
+  theme(legend.position = "none", axis.text.x=element_blank(),
+  axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
+  labs(title = topic) -> erGraph
+  return(erGraph)
+}
+
+#Display first graph with Legend (All the graphs share the same Legend)
+decon %>%
+  filter(decon$employment %in% c("Student", "Student and working for Pay")) %>% 
+  count(econ_retro) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ggplot(aes(x = econ_retro, y = prop, group = econ_retro)) +
+  geom_col(aes(fill = econ_retro), position = "dodge") +
+  geom_text(aes(label = scales::percent(prop), y = prop, group = econ_retro)) +
+  theme(axis.text.x=element_blank(),
+  axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
+  labs(title = "Student's Opionion")
+
+graphER( c("Working for pay part-time",
+                              "Self employed (with or without employees)"), 
+         "Part Time") -> pt
+
+graphER(c("Working for pay full-time"), "Full Time") -> ft
+
+graphER(c("Retired"), "Retired") -> re
+
+graphER(c("Unemployed/ looking for work"), "Unemployed") -> um
+
+graphER(c("Disabled"), "Disabled")-> ds
+
+grid.arrange(pt, ft, re, um, ds, ncol=3, nrow =3)
 ```
 
+In this graph we find that the opinion of most people swings between the economy staying the same or the economy is getting wose. With only disabled and unemployed people having more people that think the economy got worse, while still have a big proportion of people that still think the economy that is staying the same.
 
-```{r}
-decon %>% 
-  ggplot(aes(x = income)) +
-  geom_histogram()
+Econ_Fed
+```{r, echo = FALSE}
+#Displaying graph of how the various employment groups view the government
+
+#Takes optF as the vector that act as the filter input, topic is the title
+graphEF<- function( optF, topic){
+  decon %>%
+  filter(decon$employment %in% optF) %>% 
+  count(econ_fed) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ggplot(aes(x = econ_fed, y = prop, group = econ_fed)) +
+  geom_col(aes(fill = econ_fed), position = "dodge") +
+  geom_text(aes(label = scales::percent(prop), y = prop, group = econ_fed)) +
+  theme(legend.position = "none", axis.text.x=element_blank(),
+  axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
+  labs(title = topic) -> erGraph
+  return(erGraph)
+}
+
+#Display first graph with Legend (All the graphs share the same Legend)
+decon %>%
+  filter(decon$employment %in% c("Student", "Student and working for Pay")) %>% 
+  count(econ_fed) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ggplot(aes(x = econ_fed, y = prop, group = econ_fed)) +
+  geom_col(aes(fill = econ_fed), position = "dodge") +
+  geom_text(aes(label = scales::percent(prop), y = prop, group = econ_fed)) +
+  theme(axis.text.x=element_blank(),
+  axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
+  labs(title = "Student's Opionion")
+
+#Print the rest of the graphs
+graphEF( c("Working for pay part-time",
+                              "Self employed (with or without employees)"), 
+         "Part Time") -> ptf
+
+graphEF(c("Working for pay full-time"), "Full Time") -> ftf
+
+graphEF(c("Retired"), "Retired") -> rtf
+
+graphEF(c("Unemployed/ looking for work"), "Unemployed") -> umf
+
+graphEF(c("Disabled"), "Disabled")-> dsf
+
+#Arrange the rest of the graphs
+grid.arrange(ptf, ftf, rtf, umf, dsf, ncol=3, nrow =3)
 ```
 
+Econ_self
+```{r, echo = FALSE}
+#Displaying graph of how the various employment groups view their situation as compared to before
 
-In this graph we find that the distribution of income is heavily skewed....
+#Takes optF as the vector that act as the filter input, topic is the title
+graphIT<- function( optF, topic){
+  decon %>%
+  filter(decon$employment %in% optF) %>% 
+  count(econ_self) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ggplot(aes(x = econ_self, y = prop, group = econ_self)) +
+  geom_col(aes(fill = econ_self), position = "dodge") +
+  geom_text(aes(label = scales::percent(prop), y = prop, group = econ_self)) +
+  theme(legend.position = "none", axis.text.x=element_blank(),
+  axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
+  labs(title = topic) -> erGraph
+  return(erGraph)
+}
+
+#Display first graph with Legend (All the graphs share the same Legend)
+decon %>%
+  filter(decon$employment %in% c("Student", "Student and working for Pay")) %>% 
+  count(econ_self) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ggplot(aes(x = econ_self, y = prop, group = econ_self)) +
+  geom_col(aes(fill = econ_self), position = "dodge") +
+  geom_text(aes(label = scales::percent(prop), y = prop, group = econ_self)) +
+  theme(axis.text.x=element_blank(),
+  axis.ticks.x=element_blank(), axis.title.x = element_blank()) +
+  labs(title = "Student's Opionion")
+
+graphIT( c("Working for pay part-time",
+                              "Self employed (with or without employees)"), 
+         "Part Time") -> pts
+
+graphIT(c("Working for pay full-time"), "Full Time") -> fts
+
+graphIT(c("Retired"), "Retired") -> rts
+
+graphIT(c("Unemployed/ looking for work"), "Unemployed") -> ums
+
+graphIT(c("Disabled"), "Disabled")-> dss
+
+grid.arrange(pts, fts, rts, ums, dss, ncol=3, nrow =3)
+```
 
 
 
@@ -119,6 +244,9 @@ My weaknesses...
 - JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2020). rmarkdown: Dynamic Documents for R. R package version 2.3. URL https://rmarkdown.rstudio.com.
 - Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2020, '2019 Canadian Election Study - Online Survey',
            https://doi.org/10.7910/DVN/DUS88V, Harvard Dataverse, V1
+- Baptiste Auguie (2017). gridExtra: Miscellaneous Functions for "Grid" Graphics. R package version 2.3.
+  https://CRAN.R-project.org/package=gridExtra
+  
 
 
 
