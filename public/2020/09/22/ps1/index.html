@@ -57,7 +57,7 @@
 
   <article class="article">
     
-    <span class="article-duration">4 min read</span>
+    <span class="article-duration">5 min read</span>
     
 
     <h1 class="article-title">CES: Comparing Opinions of the Economy between the Differently Employed</h1>
@@ -72,7 +72,7 @@
 
 <div id="abstract" class="section level1">
 <h1>Abstract</h1>
-<p>Using data from the 2019 Canadian Elections Study, three different questions about the economy asd given to people of different employment statuses (Students, Retired, Part Time, Full Time, Unemployed, and Disabled), and their opinions are compared. The data is then organized with the goal to see if there will be major differences in opinion between people of different employment status. It seems that people tend to not think the economy is better, and that unemployed/disabled people tend to think that the economy is worse off in general.</p>
+<p>Using data from the 2019 Canadian Elections Study, three different questions about the economy and given to people of different employment statuses (Students, Retired, Part Time, Full Time, Unemployed, and Disabled), and their opinions are compared. The data is then organized with the goal to see if there will be major differences in opinion between people of different employment status. It seems that people tend to not think the economy is better, and think it is mostly worse off.</p>
 <hr />
 </div>
 <div id="introduction" class="section level1">
@@ -84,36 +84,65 @@
 <li>econ_fed: If people think that the government have made an impact on the economy - whether it is positive or negative.</li>
 <li>econ_self: How did people feel the effects of the government policies economically.</li>
 </ul>
-<p>Through the exploration of data, I found that unemployed and disabled people are more likely, according to this survey, to view the economy to be worse. Though a significant portion of them still think that there are no significant differences. Most importantly, only a minority in any group think that the economy is getting better.</p>
+<p>Through the exploration of data, I found that unemployed and disabled people are more likely, according to this survey, to view the economy to be worse. Though a significant portion of them still think that there are no significant differences. Most importantly, at any given time only a minority in any group think that the economy is getting better.</p>
 <p>This is only a preliminary analysis of the data, and no statistical model have been fitted to match the data. Mainly because the study is done on categorical data with only four different choices. Which means that fitting a statistical model is an improvement that can be made, and of course, a weakness in itself also. Regardless, another possible area that can be explored is other factors that may affect people’s opinion on the economy.</p>
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>Of 37822 people, 2456 of them did not fill in the data and therefore are not considered as part of the following graphs. In the survey, the students are split into Students and Students with Pay, but they are combined in this report as simply “Student”.</p>
+<p>Here are the general numbers:</p>
+<ul>
+<li>Total amount of Students: 1314</li>
+<li>Total amount of Part Timers: 3415</li>
+<li>Total amount of Full Timers: : 16124</li>
+<li>Total amount of Retired: 9008</li>
+<li>Total amount of Unemployed: 1676</li>
+<li>Total amount of Disabled: 1312</li>
+<li>Total amount of Self Employed: 2517</li>
+</ul>
 <div id="peoples-view-of-the-economy-over-the-past-year" class="section level3">
 <h3>People’s View of the Economy over the Past Year</h3>
 <p><em>Figures are numbered from top to bottom, and left to right. As in, Student’s Opinion -&gt; Part Time -&gt; Full Time -&gt; Retired -&gt; Unemployed -&gt; Disabled -&gt; Self Employed</em></p>
-<p><em>Fig. 1 ~ 7</em>
-<img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><em>Fig. 1 ~ 7</em></p>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/graph-econ_ER-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/graph-econ_ER-2.png" width="672" /></p>
+<ul>
+<li>The average difference between “Got Worse” and “Got Better”: 26.7428571%</li>
+</ul>
 </div>
 <div id="peoples-view-of-the-governments-work-on-the-economy" class="section level3">
 <h3>People’s View of the Government’s Work on the Economy</h3>
-<p><em>Fig. 8 ~ 13</em>
-<img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-3-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p><em>Fig. 8 ~ 13</em></p>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/graph-econ_EF-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/graph-econ_EF-2.png" width="672" /></p>
+<ul>
+<li>The average difference between Worse and Better: 21.0657143%</li>
+</ul>
 </div>
 <div id="governments-policies-effect-on-people" class="section level3">
 <h3>Government’s Policies’ Effect on People</h3>
-<p><em>Fig. 14 ~ 19</em>
-<img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><em>Fig. 14 ~ 19</em></p>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/graph-econ_ES-1.png" width="672" /><img src="/post/2020-09-22-ps1_files/figure-html/graph-econ_ES-2.png" width="672" /></p>
+<ul>
+<li>The average difference between “Better” and “Worse”: 28.1857143%</li>
+</ul>
 </div>
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>
-<p>The main theme across Fig. 1-6 are that Retirees, Students,</p>
-<p>Features of your survey…. Non-response… etc. And how these could affect the results….</p>
+<p>The main theme across Fig. 1-7 are that everyone except for the unemployed and the disabled people share similar opinions of economy, with roughly 10% of Disabled and Unemployed people are shifted towards “Got Worse” as compared to "Stayed about the same.</p>
+<p>Across Fig. 8-13 the average difference between “Stayed about the same” and “Worse” is about the same, but still there are much more people with a negative outlook on the economical policies than positive outlook.</p>
+<p>Across Fig. 14 ~ 19, it has the biggest average difference between Worse and Better, and it has approximately the same results as Fig. 1 ~ 7, as government’s policy and economy seem to go hand in hand.</p>
+<p>The surprising thing is that across all three economical opinions, there is always more than a third of any group that think the economy has not shifted at all, and it is almost unanimous in the fact that a big proportion of the economy is getting worse. Though the students have the most variability in terms of % of people thinking that the economy is better.</p>
+<p>This survey is conducted online, and it has many columns containing non-responses. None responses are shown as a gray column in the figure below. However, the columns used are the ones that are mostly in green, meaning that there’s a response.</p>
+<p><img src="/post/2020-09-22-ps1_files/figure-html/see_none_response-1.png" width="672" /></p>
 <div id="weaknesses-and-next-steps" class="section level2">
 <h2>Weaknesses and next steps</h2>
-<p>My weaknesses…</p>
+<p>The statistical means calculated in the data sections are not weighted, which meant that the smaller populations like unemployed have the same weight in calculating the average as the full time workers, which make up almost half of all the data point. Also, as mentioned before there are no statistical models fitted to this report, and the analysis done is mostly rudimentary.</p>
+<p>Possible next steps can be to dig further into the data and:</p>
+<ul>
+<li>Put a weight on each employment area based on amount of people</li>
+<li>Find another variable that may tie employment type to their opinion</li>
+<li>Fit a model where possible</li>
+</ul>
 </div>
 </div>
 <div id="references" class="section level1">
