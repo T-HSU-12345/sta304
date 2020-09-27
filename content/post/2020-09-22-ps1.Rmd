@@ -1,6 +1,6 @@
 ---
 title: "CES: Comparing Opinions of the Economy between the Differently Employed"
-author: Ting Hsu
+author: "Ting Hsu"
 date: '2020-09-22'
 categories:
   - R
