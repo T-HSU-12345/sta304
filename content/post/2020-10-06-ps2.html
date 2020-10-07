@@ -80,6 +80,11 @@ savings time</li>
 <li>People in Saskatchewan still knows what DST feels like, even though they do not currently use DST.</li>
 </ul>
 <p><img src="/post/2020-10-06-ps2_files/figure-html/graphs-1.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-2.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-3.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-4.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-5.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-6.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-7.png" width="672" /></p>
+<p>ON = Ontario, SA = Saskatchewan</p>
+<p><em>The RMarkdown file for this report can be found at: <a href="https://github.com/T-HSU-12345/sta304/tree/master/content/post/2020-10-06-ps2.Rmd" class="uri">https://github.com/T-HSU-12345/sta304/tree/master/content/post/2020-10-06-ps2.Rmd</a></em></p>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
 <p>Toronto:<br />
 mean: 9.5040512 hours, standard deviation: 1.5168929 hours<br />
 Ottawa:<br />
@@ -87,13 +92,12 @@ mean: 9.4674077 hours, standard deviation: 1.4941763 hours<br />
 Saskatchewan:<br />
 mean: 9.5205714 hours, standard deviation: 1.5426172 hours</p>
 <p>The mean is calculate using the following function:</p>
-<p><span class="math inline">\(\frac{\sum h}{n}\)</span></p>
-<p>Where the nominator <span class="math inline">\(\sum h\)</span> represents the sum of all the hours combined, and the denominator <span class="math inline">\(n\)</span> represent the total number of answers.</p>
-<p><em>The RMarkdown file for this report can be found at: <a href="https://github.com/T-HSU-12345/sta304/tree/master/content/post/2020-10-06-ps2.Rmd" class="uri">https://github.com/T-HSU-12345/sta304/tree/master/content/post/2020-10-06-ps2.Rmd</a></em></p>
-</div>
-<div id="discussion" class="section level1">
-<h1>Discussion</h1>
-<p>As shown above, the three major cities across both provinces have people following a similar normal distribution curve. Most people a</p>
+<p><span class="math inline">\(\mu = \frac{\sum h}{n}\)</span></p>
+<p>Where the nominator <span class="math inline">\(\sum h\)</span> represents the sum of all the hours combined, and the denominator <span class="math inline">\(n\)</span> represents the total number of answers. <span class="math inline">\(\mu\)</span> represents the mean.</p>
+<p>The standard deviation is calculated using the following function:</p>
+<p><span class="math inline">\(\mu = \sqrt{\frac{\sum(x_i - \mu)^2}{N}}\)</span></p>
+<p>Where the nominator <span class="math inline">\(\sum(x_i - \mu)^2\)</span> is the sum of each input of hours minus the mean all squared, and the denominator <span class="math inline">\(N\)</span> is the total number of participants. This calculates what proportion of people have the similar sleeping schedules. A standard deviation of 1.5168929 hours for Toronto, for example, meant that 68.2 % of people have preferred sleeping time of 7.9871583 - 11.0209441 hours. Which is the mean plus or minus one standard deviation.</p>
+<p>As shown above, the three major cities across both provinces have people following a similar normal distribution curve.</p>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
