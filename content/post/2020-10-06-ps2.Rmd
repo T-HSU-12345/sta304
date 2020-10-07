@@ -242,13 +242,13 @@ The mean is calculate using the following function:
 
 $\mu = \frac{\sum h}{n}$
 
-Where the nominator $\sum h$ represents the sum of all the hours combined, and the denominator $n$ represents the total number of answers. $\mu$ represents the mean.
+Where the numerator $\sum h$ represents the sum of all the hours combined, and the denominator $n$ represents the total number of answers. $\mu$ represents the mean.
 
 The standard deviation is calculated using the following function:
 
-$\mu = \sqrt{\frac{\sum(x_i - \mu)^2}{N}}$
+$\sigma = \sqrt{\frac{\sum(x_i - \mu)^2}{N}}$
 
-Where the nominator $\sum(x_i - \mu)^2$ is the sum of each input of hours minus the mean all squared, and the denominator $N$ is the total number of participants. This calculates what proportion of people have the similar sleeping schedules. A standard deviation of `r sd(tor$Q8)` hours for Toronto, for example, meant that 68.2 % of people have preferred sleeping time of `r mean(tor$Q8) - sd(tor$Q8)` - `r mean(tor$Q8) + sd(tor$Q8)` hours. Which is the mean plus or minus one standard deviation.
+Where the numerator $\sum(x_i - \mu)^2$ is the sum of each input of hours minus the mean all squared, and the denominator $N$ is the total number of participants. This calculates what proportion of people have the similar sleeping schedules. A standard deviation of `r sd(tor$Q8)` hours for Toronto, for example, meant that 68.2 % of people have preferred sleeping time of `r mean(tor$Q8) - sd(tor$Q8)` - `r mean(tor$Q8) + sd(tor$Q8)` hours. Which is the mean plus or minus one standard deviation.
 
 As shown above, the three major cities across both provinces have people following a similar normal distribution curve. With just over half of the people for both provinces have opinions against DST, of which about a quarter are neutral. 
 

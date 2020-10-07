@@ -41,7 +41,7 @@ population and their respective opinions on the subject. Which will aid the Cons
 <div id="survey-methodology" class="section level1">
 <h1>Survey Methodology</h1>
 <p>The data of this report is collected online through Google Forms, it seeks to compare two distinctly different provinces in terms of DST: Saskatchewan and Ontario, and its resident’s opinion on the matter. The reason for this is that we want to have two independent groups to compare.</p>
-<p>We chose cities that are in the southern parts of their respective provinces, as shown below. These cities share similar latitudes and therefore should have similar hours of daylight (Not factoring weather).</p>
+<p>We chose (relatively) major cities that are in the southern parts of their respective provinces, as shown below. These cities share similar latitudes and therefore should have similar hours of daylight (Not factoring weather).</p>
 <p>Latitude of Cities (In Degrees North):</p>
 <p>Ontario Cities:</p>
 <ul>
@@ -93,11 +93,13 @@ Saskatchewan:<br />
 mean: 9.5205714 hours, standard deviation: 1.5426172 hours</p>
 <p>The mean is calculate using the following function:</p>
 <p><span class="math inline">\(\mu = \frac{\sum h}{n}\)</span></p>
-<p>Where the nominator <span class="math inline">\(\sum h\)</span> represents the sum of all the hours combined, and the denominator <span class="math inline">\(n\)</span> represents the total number of answers. <span class="math inline">\(\mu\)</span> represents the mean.</p>
+<p>Where the numerator <span class="math inline">\(\sum h\)</span> represents the sum of all the hours combined, and the denominator <span class="math inline">\(n\)</span> represents the total number of answers. <span class="math inline">\(\mu\)</span> represents the mean.</p>
 <p>The standard deviation is calculated using the following function:</p>
-<p><span class="math inline">\(\mu = \sqrt{\frac{\sum(x_i - \mu)^2}{N}}\)</span></p>
-<p>Where the nominator <span class="math inline">\(\sum(x_i - \mu)^2\)</span> is the sum of each input of hours minus the mean all squared, and the denominator <span class="math inline">\(N\)</span> is the total number of participants. This calculates what proportion of people have the similar sleeping schedules. A standard deviation of 1.5168929 hours for Toronto, for example, meant that 68.2 % of people have preferred sleeping time of 7.9871583 - 11.0209441 hours. Which is the mean plus or minus one standard deviation.</p>
-<p>As shown above, the three major cities across both provinces have people following a similar normal distribution curve.</p>
+<p><span class="math inline">\(\sigma = \sqrt{\frac{\sum(x_i - \mu)^2}{N}}\)</span></p>
+<p>Where the numerator <span class="math inline">\(\sum(x_i - \mu)^2\)</span> is the sum of each input of hours minus the mean all squared, and the denominator <span class="math inline">\(N\)</span> is the total number of participants. This calculates what proportion of people have the similar sleeping schedules. A standard deviation of 1.5168929 hours for Toronto, for example, meant that 68.2 % of people have preferred sleeping time of 7.9871583 - 11.0209441 hours. Which is the mean plus or minus one standard deviation.</p>
+<p>As shown above, the three major cities across both provinces have people following a similar normal distribution curve. With just over half of the people for both provinces have opinions against DST, of which about a quarter are neutral.</p>
+<p>This survey is purposefully kept short, with only 7 simple questions of multiple choice, and one simple numerical question (how many hours of sleep do you need?), this aims to reduce the chance of people randomly selecting the answers due to boredom/lack of knowledge.
+There are several factors that we can not account for with this survey. We can only determine who have poor opinion of DST, but not who likes DST, due to the nature of the survey questions. Since the people who answered “Neutral” can swing either way. There are certain inherent inaccuracies, since there might be people who lived in the northern part of the province and are more affected by daylight shift, but are not accounted for withe the choice of nearest city mostly being in the southern part of either provinces.</p>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
