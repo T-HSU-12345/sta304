@@ -1,6 +1,6 @@
 ---
 title: Interprovincial Survey of DST
-author: 'Ting Hsu'
+author: 'Ting Hsu, Samantha Hassal'
 date: '2020-10-06'
 slug: ps2
 categories: []
@@ -20,25 +20,29 @@ output:
 <li><a href="#survey-methodology">Survey Methodology</a></li>
 <li><a href="#data">Data</a></li>
 <li><a href="#discussion">Discussion</a></li>
-<li><a href="#results">Results</a></li>
+<li><a href="#results">Results</a>
+<ul>
+<li><a href="#references">References</a></li>
+</ul></li>
 </ul>
 </div>
 
+<p><em>Authors: S. Hassal, T. Hsu</em></p>
 <div id="non-technical-executive-summary" class="section level1">
 <h1>Non-technical Executive Summary</h1>
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>This survey seeks to determine the effects of Daylight Saving Time policy on the
-population, and their respective opinions on the subject. To clarify, Day Light Saving time is where on two days of the year we shift the clock forward one hour, and later backwards one hour. The original purpose of this is to make more use out of daytime during the summer months, as it moves one hour of daylight in the morning to the evening.</p>
+population and their respective opinions on the subject. Which will aid the Conservative Party’s decision-making on whether or not DST should be kept. To clarify, Day Light Saving time is where on two days of the year we shift the clock forward one hour, and later backwards one hour. The original purpose of this is to make more use out of daytime during the summer months, as it moves one hour of daylight in the morning to the evening.</p>
 <p>In this report, the data is gathered with an online form targeting the populations of Saskatchewan and Ontario. These two provinces are chosen because one uses DST (Ontario), and the other doesn’t (Saskatchewan). However, Saskatchewan is <em>always</em> on DST. Meaning that the time zone for Saskatchewan should be Mountain Time Zone (GST -7:00), but it is using Central Standard Time (GST -6:00).</p>
 </div>
 <div id="survey-methodology" class="section level1">
 <h1>Survey Methodology</h1>
-</div>
-<div id="data" class="section level1">
-<h1>Data</h1>
+<p>The data of this report is collected online through Google Forms, it seeks to compare two distinctly different provinces in terms of DST: Saskatchewan and Ontario, and its resident’s opinion on the matter. The reason for this is that we want to have two independent groups to compare.</p>
+<p>We chose cities that are in the southern parts of their respective provinces, as shown below. These cities share similar latitudes and therefore should have similar hours of daylight (Not factoring weather).</p>
 <p>Latitude of Cities (In Degrees North):</p>
+<p>Ontario Cities:</p>
 <ul>
 <li>Windsor: 42</li>
 <li>Toronto: 43</li>
@@ -46,11 +50,24 @@ population, and their respective opinions on the subject. To clarify, Day Light 
 <li>Ottawa: 45</li>
 <li>Kingston: 44</li>
 <li>Thunder Bay: 48</li>
+</ul>
+<p>Saskatchewan Cities:</p>
+<ul>
 <li>Saskatoon: 52</li>
 <li>Regina: 50</li>
 <li>Timmins: 48</li>
 <li>Uranium City: 59</li>
 </ul>
+<p>We are interested in the following information:</p>
+<ul>
+<li>Functionality of life</li>
+<li>Opinion on DST (Positive of Negative)</li>
+</ul>
+<p>Where the functionality is determined by asking a series of questions on their sleeping quality, which is what we assumed to be a big factor. On the other hand, opinions about the DST is presented as whether or not people think that they are more irritable or less able to think while DST system is in place. There are multiple survey questions regarding these so that we can get a lower error.</p>
+<p>Since we are basing most of the data on sleeping habits, we will not consider anyone with sleeping conditions. The first question of the survey is designed so that this issue is addressed.</p>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
 <p>The data is randomly generated and sampled with the following assumptions:</p>
 <ul>
 <li>Only 0.2 % of the target population responded.
@@ -62,10 +79,44 @@ savings time</li>
 <li>People in Saskatchewan still knows what DST feels like, even though they do n</li>
 </ul>
 <p><img src="/post/2020-10-06-ps2_files/figure-html/graphs-1.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-2.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-3.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-4.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-5.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-6.png" width="672" /><img src="/post/2020-10-06-ps2_files/figure-html/graphs-7.png" width="672" /></p>
+<p>Toronto:<br />
+mean: 9.5040512 hours, standard deviation: 1.5168929 hours<br />
+Ottawa:<br />
+mean: 9.4674077 hours, standard deviation: 1.4941763 hours<br />
+Saskatchewan:<br />
+mean: 9.5205714 hours, standard deviation: 1.5426172 hours</p>
+<p>The mean is calculate using this function</p>
+<p><em>The RMarkdown file for this report can be found at: <a href="https://github.com/T-HSU-12345/sta304/tree/master/content/post" class="uri">https://github.com/T-HSU-12345/sta304/tree/master/content/post</a></em></p>
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>
+<p>As shown above, the three major cities accross both provinces have people following a similar normal distribution curve.</p>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
+<div id="references" class="section level3">
+<h3>References</h3>
+<ul>
+<li><p>Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source
+Software, 4(43), 1686, <a href="https://doi.org/10.21105/joss.01686" class="uri">https://doi.org/10.21105/joss.01686</a></p></li>
+<li><p>Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr:
+A Grammar of Data Manipulation. R package version 1.0.2.
+<a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a></p></li>
+<li><p>H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New
+York, 2016.</p></li>
+<li><p>Hadley Wickham, Jim Hester and Romain Francois (2018). readr: Read Rectangular
+Text Data. R package version 1.3.1. <a href="https://CRAN.R-project.org/package=readr" class="uri">https://CRAN.R-project.org/package=readr</a></p></li>
+<li><p>R Core Team (2020). R: A language and environment for statistical computing. R
+Foundation for Statistical Computing, Vienna, Austria. URL
+<a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p></li>
+<li><p>JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin
+Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and
+Richard Iannone (2020). rmarkdown: Dynamic Documents for R. R package version
+2.3. URL <a href="https://rmarkdown.rstudio.com" class="uri">https://rmarkdown.rstudio.com</a>.</p></li>
+<li><p>Yihui Xie (2020). blogdown: Create Blogs and Websites with R Markdown. R
+package version 0.20.</p></li>
+<li><p>Yihui Xie, Alison Presmanes Hill, and Amber Thomas (2017). blogdown: Creating
+Websites with R Markdown. Chapman and Hall/CRC. ISBN 978-0815363729</p></li>
+</ul>
+</div>
 </div>

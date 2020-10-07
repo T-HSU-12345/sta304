@@ -1,6 +1,6 @@
 ---
 title: Interprovincial Survey of DST
-author: 'Ting Hsu'
+author: 'Ting Hsu, Samantha Hassal'
 date: '2020-10-06'
 slug: ps2
 categories: []
@@ -20,6 +20,7 @@ library(dplyr)
 library(ggplot2)
 library(tidyverse)
 ```
+*Authors: S. Hassal, T. Hsu*
 
 # Non-technical Executive Summary
 
@@ -28,28 +29,58 @@ library(tidyverse)
 # Introduction
 
 This survey seeks to determine the effects of Daylight Saving Time policy on the 
-population, and their respective opinions on the subject. To clarify, Day Light Saving time is where on two days of the year we shift the clock forward one hour, and later backwards one hour. The original purpose of this is to make more use out of daytime during the summer months, as it moves one hour of daylight in the morning to the evening.
+population and their respective opinions on the subject. Which will aid the Conservative Party's decision-making on whether or not DST should be kept. To clarify, Day Light Saving time is where on two days of the year we shift the clock forward one hour, and later backwards one hour. The original purpose of this is to make more use out of daytime during the summer months, as it moves one hour of daylight in the morning to the evening.
 
 In this report, the data is gathered with an online form targeting the populations of Saskatchewan and Ontario. These two provinces are chosen because one uses DST (Ontario), and the other doesn't (Saskatchewan). However, Saskatchewan is _always_ on DST. Meaning that the time zone for Saskatchewan should be Mountain Time Zone (GST -7:00), but it is using Central Standard Time (GST -6:00).
 
 # Survey Methodology
+```{r, include = FALSE}
+# Questions REFERENCE
+# Q1 Do you have a sleep disorder?
+# Q2 Closest Major City
+# Q3 During Daylight Savings, everyday inconveniences make me upset
+# Q4 During Daylight Savings, I struggle to put my thoughts in words.
+# Q5 When I don't get enough sleep, I feel my performance at work or school suffer.
+# Q6 I find it harder to get to bed on time during daylight saving
+# Q7 During daylight savings, I catch myself waking up in the middle of the night because I am worried
+# Q8 How much sleep is needed to function (Number in Hours)
+```
 
 
-# Data
+The data of this report is collected online through Google Forms, it seeks to compare two distinctly different provinces in terms of DST: Saskatchewan and Ontario, and its resident's opinion on the matter. The reason for this is that we want to have two independent groups to compare.
+
+We chose cities that are in the southern parts of their respective provinces, as shown below. These cities share similar latitudes and therefore should have similar hours of daylight (Not factoring weather).
 
 Latitude of Cities (In Degrees North):
-    
+
+Ontario Cities:    
+
   - Windsor: 42
   - Toronto: 43 
   - Sarnia: 42
   - Ottawa: 45
   - Kingston: 44
   - Thunder Bay: 48
+  
+Saskatchewan Cities:
+
   - Saskatoon: 52
   - Regina: 50 
   - Timmins: 48
   - Uranium City: 59
   
+
+We are interested in the following information:
+
+ - Functionality of life
+ - Opinion on DST (Positive of Negative)
+ 
+Where the functionality is determined by asking a series of questions on their sleeping quality, which is what we assumed to be a big factor. On the other hand, opinions about the DST is presented as whether or not people think that they are more irritable or less able to think while DST system is in place. There are multiple survey questions regarding these so that we can get a lower error. 
+
+Since we are basing most of the data on sleeping habits, we will not consider anyone with sleeping conditions. The first question of the survey is designed so that this issue is addressed.
+
+
+# Data
 
 The data is randomly generated and sampled with the following assumptions:
 
@@ -149,15 +180,6 @@ hist(deframe(sask), main="Hours of Sleep per Night (Saskatoon)",
 xlab="Hours",
 col="chocolate")
 
-# Questions REFERENCE
-# Q1 Do you have a sleep disorder?
-# Q2 Closest Major City
-# Q3 During Daylight Savings, everyday inconveniences make me upset
-# Q4 During Daylight Savings, I struggle to put my thoughts in words.
-# Q5 When I don't get enough sleep, I feel my performance at work or school suffer.
-# Q6 I find it harder to get to bed on time during daylight saving
-# Q7 During daylight savings, I catch myself waking up in the middle of the night because I am worried
-# Q8 How much sleep is needed to function (Number in Hours)
 
 #Bargraph of Q3-Q7 Responses Combined:
 # combined<- unite(working,"Response", Q3:Q7, na.rm = TRUE, remove = FALSE)
@@ -200,15 +222,64 @@ labs(title = "Proportion of Response Towards DST Being Bad SA")
 
 
 ```
+```{r, include= FALSE}
+mean(tor$Q8)
+mean(ott$Q8)
+mean(sask$Q8)
+sd(tor$Q8)
+sd(ott$Q8)
+sd(sask$Q8)
+```
+Toronto:  
+mean: `r mean(tor$Q8)` hours, standard deviation: `r sd(tor$Q8)` hours  
+Ottawa:  
+mean: `r mean(ott$Q8)` hours, standard deviation: `r sd(ott$Q8)` hours  
+Saskatchewan:  
+mean: `r mean(sask$Q8)` hours, standard deviation: `r sd(sask$Q8)` hours  
 
+The mean is calculate using this function
 
+*The RMarkdown file for this report can be found at: https://github.com/T-HSU-12345/sta304/tree/master/content/post*
 
 # Discussion
+As shown above, the three major cities accross both provinces have people following a similar normal distribution curve.
+
+
 
 # Results
 
 
 
+
+### References
+
+- Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source
+  Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+
+- Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr:
+  A Grammar of Data Manipulation. R package version 1.0.2.
+  https://CRAN.R-project.org/package=dplyr
+
+- H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New
+  York, 2016.
+
+- Hadley Wickham, Jim Hester and Romain Francois (2018). readr: Read Rectangular
+  Text Data. R package version 1.3.1. https://CRAN.R-project.org/package=readr
+
+- R Core Team (2020). R: A language and environment for statistical computing. R
+  Foundation for Statistical Computing, Vienna, Austria. URL
+  https://www.R-project.org/.
+  
+- JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin
+  Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and
+  Richard Iannone (2020). rmarkdown: Dynamic Documents for R. R package version
+  2.3. URL https://rmarkdown.rstudio.com.
+
+- Yihui Xie (2020). blogdown: Create Blogs and Websites with R Markdown. R
+  package version 0.20.
+
+- Yihui Xie, Alison Presmanes Hill, and Amber Thomas (2017). blogdown: Creating
+  Websites with R Markdown. Chapman and Hall/CRC. ISBN 978-0815363729
 
 
 
