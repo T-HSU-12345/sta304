@@ -1,0 +1,217 @@
+---
+title: Interprovincial Survey of DST
+author: 'Ting Hsu'
+date: '2020-10-06'
+slug: ps2
+categories: []
+tags: []
+output:
+  blogdown::html_page:
+    toc: true
+    toc-depth: 1
+---
+
+
+```{r setup, include = FALSE}
+#title􏰃 date􏰃 authorship􏰃 non􏰁technical executive summary􏰃 introduction􏰃 survey methodology􏰃 results􏰃 discussion􏰃 appendices that detail the survey􏰃 and references
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+```
+
+# Non-technical Executive Summary
+
+
+
+# Introduction
+
+This survey seeks to determine the effects of Daylight Saving Time policy on the 
+population, and their respective opinions on the subject. To clarify, Day Light Saving time is where on two days of the year we shift the clock forward one hour, and later backwards one hour. The original purpose of this is to make more use out of daytime during the summer months, as it moves one hour of daylight in the morning to the evening.
+
+In this report, the data is gathered with an online form targeting the populations of Saskatchewan and Ontario. These two provinces are chosen because one uses DST (Ontario), and the other doesn't (Saskatchewan). However, Saskatchewan is _always_ on DST. Meaning that the time zone for Saskatchewan should be Mountain Time Zone (GST -7:00), but it is using Central Standard Time (GST -6:00).
+
+# Survey Methodology
+
+
+# Data
+
+Latitude of Cities (In Degrees North):
+    
+  - Windsor: 42
+  - Toronto: 43 
+  - Sarnia: 42
+  - Ottawa: 45
+  - Kingston: 44
+  - Thunder Bay: 48
+  - Saskatoon: 52
+  - Regina: 50 
+  - Timmins: 48
+  - Uranium City: 59
+  
+
+The data is randomly generated and sampled with the following assumptions:
+
+  - Only 0.2 % of the target population responded.
+  Average duration of sleep 9.5 hours and standard deviation 1.7 hours
+  - Small percentage of the target audience completed the survey
+  - Equal likelihood that people within a specific region say they live nearest to a        given city (eg, people who live in Eastern Ontario are just as likely to say they       live near Kingston as they are to live near Ottawa)
+  - Vast majority (~85%) of people agreed they can’t get to sleep during daylight
+    savings time
+  - People in Saskatchewan still knows what DST feels like, even though they do n
+
+```{r graphs, echo = FALSE}
+#constants - city/town population (Sask)
+CITIES <- 655313
+DIV_18 <- 37064
+
+#constants - city/town population (Ont) 
+#the figures for ontario came from a few quiick google searches based on region, the figures for sask came from the population report on the census
+GTA <- 5.928*10^6
+SW <- 2.584*10^6
+EAST <- 1.763*10^6
+NW <- 231691
+
+#Total population of areas of interest
+TOT <- GTA+SW+EAST+NW+DIV_18+CITIES
+
+#probability vector population
+pop_vec <- 1/TOT * c(GTA,SW, SW,EAST, NW, CITIES, CITIES, EAST,NW,DIV_18)
+
+#vector of cities
+cities <- c('Toronto', 'Windsor', 
+            'Sarnia', 'Ottawa', 'Thunder Bay', 
+            'Saskatoon', 'Regina', 'Kingston', 
+            'Timmins', 'Uranium City')
+cities_ON <- c('Toronto', 'Windsor', 
+            'Sarnia', 'Ottawa', 'Thunder Bay', 'Kingston')
+cities_SA <- c('Saskatoon', 'Regina', 'Timmins', 'Uranium City')
+#agree-disagree vector
+agree_dis <- c('Completely disagree','Disagree','Neutral','Agree','Completely agree')
+
+#number of hours of sleep
+sleep <- seq(6, 13, by = 0.1)
+sleep_prob <- dnorm(sleep, mean = 9.5, sd = 1.7)
+
+#seeding for random variables (assume 0.2% of the total population take survey)
+n = 0.002*TOT
+set.seed(n)
+#samples for survey questions
+Q1 = sample(c('yes','no'), n, replace = TRUE, prob = c(0.05, 0.95))
+Q2 = sample(cities, n, replace = TRUE, prob=pop_vec)
+Q3 = sample(agree_dis, n, replace = TRUE, prob=c(.2,.2,.2,.2,.2))
+Q4 = sample(agree_dis, n, replace = TRUE, prob=c(.15,.2,.15,.2,.3))
+Q5 = sample(agree_dis, n, replace = TRUE, prob=c(.05,.2,.05,.4,.2))
+Q6 = sample(agree_dis, n, replace = TRUE, prob=c(.05,.05,.05,.85,0))
+Q7 = sample(agree_dis, n, replace = TRUE, prob=c(0,.15,.7,.15,0))
+Q8 = sample(sleep, n, replace = TRUE, prob=sleep_prob)
+
+#collect in a table
+results <- tibble(Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8)
+
+#filter out people with sleep disorders
+working <- results %>%
+filter(Q1=="no")
+
+
+#look at who agreed with Question 6
+q6_agree <- working %>%
+filter(Q6=="Agree")
+
+#make a bar graph of where people lived
+bar_tor <- ggplot(q6_agree, aes(x=Q2)) + geom_bar() + labs(x="City", y='number of responses')
+bar_tor + coord_flip()
+
+#retrieve hours of sleep for each city
+tor <- working %>%
+filter(Q2=='Toronto')%>%
+select(Q8)
+
+ott <- working %>%
+filter(Q2=='Ottawa')%>%
+select(Q8)
+
+sask <- working %>%
+filter(Q2=='Saskatoon')%>%
+select(Q8)
+
+#histogram of hours of sleep
+hist(deframe(tor), main="Hours of Sleep per Night (Toronto)",
+xlab="Hours",
+col="darkmagenta")
+
+hist(deframe(ott), main="Hours of Sleep per Night (Ottawa)",
+xlab="Hours",
+col="goldenrod")
+
+hist(deframe(sask), main="Hours of Sleep per Night (Saskatoon)",
+xlab="Hours",
+col="chocolate")
+
+# Questions REFERENCE
+# Q1 Do you have a sleep disorder?
+# Q2 Closest Major City
+# Q3 During Daylight Savings, everyday inconveniences make me upset
+# Q4 During Daylight Savings, I struggle to put my thoughts in words.
+# Q5 When I don't get enough sleep, I feel my performance at work or school suffer.
+# Q6 I find it harder to get to bed on time during daylight saving
+# Q7 During daylight savings, I catch myself waking up in the middle of the night because I am worried
+# Q8 How much sleep is needed to function (Number in Hours)
+
+#Bargraph of Q3-Q7 Responses Combined:
+# combined<- unite(working,"Response", Q3:Q7, na.rm = TRUE, remove = FALSE)
+q3q7Dat <- select(working, Q2:Q7)
+q3q7Comb <- pivot_longer(q3q7Dat, Q3:Q7)
+q3q7Comb %>% 
+count(value) %>% 
+mutate(prop = n/sum(n)) %>% 
+ggplot(aes(x = value, y = prop, group = value)) +
+geom_col(aes(fill = value), position = "dodge") +
+geom_text(aes(label = scales::percent(prop), y = prop, group = value)) +
+theme(axis.text.x=element_blank(), axis.title.x = element_blank()) +
+labs(title = "Overall Proportion of Response Towards DST Being Bad")
+
+q3q7Comb %>% 
+filter(Q2 %in% cities_ON) %>%  
+count(value) %>% 
+mutate(prop = n/sum(n)) %>% 
+ggplot(aes(x = value, y = prop, group = value)) +
+geom_col(aes(fill = value), position = "dodge") +
+geom_text(aes(label = scales::percent(prop), y = prop, group = value)) +
+theme(axis.text.x=element_blank(), axis.title.x = element_blank()) +
+labs(title = "Proportion of Response Towards DST Being Bad ON")
+
+q3q7Comb %>% 
+filter(Q2 %in% cities_SA) %>%  
+count(value) %>% 
+mutate(prop = n/sum(n)) %>% 
+ggplot(aes(x = value, y = prop, group = value)) +
+geom_col(aes(fill = value), position = "dodge") +
+geom_text(aes(label = scales::percent(prop), y = prop, group = value)) +
+theme(axis.text.x=element_blank(), axis.title.x = element_blank()) +
+labs(title = "Proportion of Response Towards DST Being Bad SA")
+  
+
+#TODO Generate the rest of the responses.
+
+
+#0.2% of the target audience responded to the survey
+
+
+```
+
+
+
+# Discussion
+
+# Results
+
+
+
+
+
+
+
+
+
