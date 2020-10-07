@@ -24,6 +24,7 @@ library(tidyverse)
 
 # Non-technical Executive Summary
 
+In Ontario and Saskatchewan, people more often than not find themselves tired and unproductive under DST. The amount of hours that people want to sleep is not affected by the prescence of the DST system.
 
 
 # Introduction
@@ -239,7 +240,7 @@ mean: `r mean(sask$Q8)` hours, standard deviation: `r sd(sask$Q8)` hours
 
 The mean is calculate using this function
 
-*The RMarkdown file for this report can be found at: https://github.com/T-HSU-12345/sta304/tree/master/content/post*
+*The RMarkdown file for this report can be found at: https://github.com/T-HSU-12345/sta304/tree/master/content/post/2020-10-06-ps2.Rmd*
 
 # Discussion
 As shown above, the three major cities accross both provinces have people following a similar normal distribution curve.
