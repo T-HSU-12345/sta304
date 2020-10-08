@@ -260,6 +260,13 @@ There are several factors that we can not account for with this survey. We can o
 
 From the discussion, we can see that it is likely that most people do not have a positive outlook on DST. Then, it will be another factor to consider regarding the current policy on DST in Ontario. 
 
+### Appendix
+The Survey: https://docs.google.com/forms/d/1vzTl_Td1Iyw_PVvu41AJWHe3LzurO7zZPBGvwT-491Y/edit
+
+The website for this post: https://amazing-minsky-4f4cfc.netlify.app/2020/10/06/ps2/
+
+RMarkDown File:https://github.com/T-HSU-12345/sta304/tree/master/content/post/2020-10-06-ps2.Rmd
+
 
 ### References
 
