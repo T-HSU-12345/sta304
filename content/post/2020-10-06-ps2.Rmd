@@ -253,13 +253,12 @@ Where the numerator $\sum(x_i - \mu)^2$ is the sum of each input of hours minus 
 As shown above, the three major cities across both provinces have people following a similar normal distribution curve. With just over half of the people for both provinces have opinions against DST, of which about a quarter are neutral. 
 
 This survey is purposefully kept short, with only 7 simple questions of multiple choice, and one simple numerical question (how many hours of sleep do you need?), this aims to reduce the chance of people randomly selecting the answers due to boredom/lack of knowledge.
+
 There are several factors that we can not account for with this survey. We can only determine who have poor opinion of DST, but not who likes DST, due to the nature of the survey questions. Since the people who answered "Neutral" can swing either way. There are certain inherent inaccuracies, since there might be people who lived in the northern part of the province and are more affected by daylight shift, but are not accounted for withe the choice of nearest city mostly being in the southern part of either provinces.
 
 # Results
 
-
-
-
+From the discussion, we can see that it is likely that most people do not have a positive outlook on DST. Then, it will be another factor to consider regarding the current policy on DST in Ontario. 
 
 
 ### References
